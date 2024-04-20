@@ -1,0 +1,23 @@
+{
+  "name": "React Chrome Extension",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "action": {
+    "default_title": "Sustainability"
+  },
+  "permissions": [
+    "scripting",
+    "tabs",
+    "storage",
+    "history",
+    "bookmarks",
+    "sidePanel"
+  ],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "side_panel": {
+    "default_path": "index.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
