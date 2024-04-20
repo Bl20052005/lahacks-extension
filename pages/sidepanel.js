@@ -1,3 +1,3 @@
-var analysis = document.querySelectorAll("analysis");
-
-console.log(analysis.length);
+document.getElementById("analysis").addEventListener("click", () => {
+  document.getElementById("analysis").classList.add("fonts");
+});
