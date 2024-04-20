@@ -1,7 +1,39 @@
-.test {
-  color: red;
+.centered-div {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.coin-svg {
+  width: 50px;
+}
+
+.search-svg {
+  width: 15px;
+  position: absolute;
+  top: 5px;
+  right: 10px;
 }
 
 .fonts {
   font-size: 2px !important;
+}
+
+.input-wrapper {
+  width: 90%;
+  position: relative;
+}
+
+.point-description {
+  font-size: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+.text-input {
+  width: 100%;
+  height: 20px;
+  padding: 2px;
+  border-radius: 5px;
 }

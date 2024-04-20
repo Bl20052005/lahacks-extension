@@ -6,17 +6,21 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
     );
   }
 
-//   const divs = document.querySelectorAll("div");
+  //   const divs = document.querySelectorAll("div");
 
-//   if (divs) {
-//     console.log(divs.length);
-//     // const length = document.createElement("p");
-//     // length.textContent = divs.length;
-//     // length.classList.add("length");
+  //   if (divs) {
+  //     console.log(divs.length);
+  //     // const length = document.createElement("p");
+  //     // length.textContent = divs.length;
+  //     // length.classList.add("length");
 
-//     //   const div_arr = [...divs];
-//     //   div_arr.forEach((item) => {
-//     //     item.textContent = "hello!";
-//     //   });
-//   }
+  //     //   const div_arr = [...divs];
+  //     //   div_arr.forEach((item) => {
+  //     //     item.textContent = "hello!";
+  //     //   });
+  //   }
+});
+
+chrome.action.onClicked.addListener((tab) => {
+  chrome.sidePanel.open({ windowId: tab.windowId });
 });

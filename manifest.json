@@ -18,6 +18,7 @@
   "background": {
     "service_worker": "scripts/background.js"
   },
+  "action": { "default_title": "Sustainability" },
   "permissions": ["tabs", "storage", "history", "bookmarks", "sidePanel"],
   "side_panel": {
     "default_path": "pages/sidebar.html"
