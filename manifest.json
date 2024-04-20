@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Sustainability Extension",
+  "description": "Base Level Extension",
+  "version": "1.0",
+  "icons": {
+    "16": "images/plant.jpg",
+    "32": "images/plant.jpg",
+    "48": "images/plant.jpg",
+    "128": "images/plant.jpg"
+  },
+  "content_scripts": [
+    {
+      "js": ["scripts/test.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "permissions": ["tabs", "storage", "history", "bookmarks", "sidePanel"],
+  "side_panel": {
+    "default_path": "pages/sidebar.html"
+  }
+}
