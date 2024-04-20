@@ -1,5 +1,5 @@
 // import React from 'react';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import AlternativeBlock from "./AlternativeBlock";
 
@@ -14,15 +14,18 @@ function App() {
       price: "99999999.99",
     },
   ]);
-  // async () => {
-  //   // see the note below on how to choose currentWindow or lastFocusedWindow
-  //   const [tab] = await chrome.tabs.query({
-  //     active: true,
-  //     lastFocusedWindow: true,
-  //   });
-  //   setUrl(tab.url);
-  //   // ..........
-  // };
+  useEffect(() => {
+    (async () => {
+      // see the note below on how to choose currentWindow or lastFocusedWindow
+      const [tab] = await chrome.tabs.query({
+        active: true,
+        lastFocusedWindow: true,
+      });
+      setUrl(tab.url);
+      console.log(tab.url);
+      // ..........
+    })();
+  }, []);
   chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     setUrl(tab.url);
   });
@@ -33,6 +36,24 @@ function App() {
     chrome.tabs.get(info.tabId, function (tab) {
       setUrl(tab.url);
     });
+  });
+  chrome.storage.onChanged.addListener((changes, namespace) => {
+    console.log("o hai", changes, namespace);
+    for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
+      if (key == "initialUrl") {
+        console.log("yes???");
+        setUrl(newValue);
+      }
+      console.log("yes???");
+      console.log(key);
+      console.log(`key is ${key}`, `which is ${typeof key}`);
+      // console.log(
+      //   `Storage key "${key}" ${
+      //     key == "initialUrl" ? "yes" : "no"
+      //   } in namespace "${namespace}" changed.`,
+      //   `Old value was "${oldValue}", new value is "${newValue}".`
+      // );
+    }
   });
   return (
     <div className="container">
