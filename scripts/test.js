@@ -12,6 +12,6 @@ if (divs) {
   //   });
 }
 
-// chrome.tabs.onUpdated.addListener(async (tabId, info, tab) => {
-//   console.log("updated!");
-// });
+chrome.storage.onChanged.addListener(async (tabId, info, tab) => {
+  console.log("updated!");
+});
