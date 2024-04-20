@@ -70,12 +70,15 @@ function App() {
 
       <div className="alternatives">
         {altInfo.map((info) => {
-          <AlternativeBlock
-            imgLink={info?.imgLink}
-            imgAlt={info?.imgAlt}
-            description={info?.description}
-            price={info?.price}
-          />;
+          return (
+            <AlternativeBlock
+              key={info.description}
+              imgLink={info?.imgLink}
+              imgAlt={info?.imgAlt}
+              description={info?.description}
+              price={info?.price}
+            />
+          );
         })}
       </div>
     </div>
