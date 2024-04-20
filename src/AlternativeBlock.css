@@ -1,0 +1,24 @@
+.alterative-block {
+  width: 250px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.alternative-image {
+  width: 150px;
+}
+
+.alternative-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  font-size: 13px;
+}
+
+.alternative-price {
+    font-size: 18px;
+}
