@@ -202,7 +202,7 @@ def product_suggestions():
     # set up the request parameters
     payload = {
         "source": "amazon_search",
-        "query": "sustainable shirt",
+        "query": f"sustainable + {product_type}",
         "parse": True,
         "domain": "com",
         "start_page": "1",
