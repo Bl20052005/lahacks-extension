@@ -1,5 +1,6 @@
 // import React from 'react';
 import { useState, useEffect } from "react";
+import axios from "axios";
 import "./App.css";
 import AlternativeBlock from "./AlternativeBlock";
 
@@ -7,7 +8,8 @@ function App() {
   const [url, setUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [hasProduct, setHasProduct] = useState(true);
-  const [productInfo, setProductInfo] = useState([]);
+  const [productInfo, setProductInfo] = useState({});
+  const [temp, setTemp] = useState("");
   const [altInfo, setAltInfo] = useState([
     {
       imgLink:
@@ -43,15 +45,57 @@ function App() {
     },
   ]);
 
-  async function getResFromAPI() {
-    // setIsLoading(true);
-    // let res = await fetch("please get this url ready", {
-    //   method: "POST",
-    //   headers: {"Content-type": "application/json"}
-    // });
+  async function secondGetAPI(title, description) {
+    try {
+      console.log("made it to the second round");
+      let res = await axios.post(
+        "http://localhost:5000/gemini",
+        {
+          title: title,
+          description: description,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      let data = await res.data;
+      setProductInfo(data);
+      console.log(data);
+      setHasProduct(true);
+      setIsLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async function getResFromAPI(url) {
+    setIsLoading(true);
+    console.log(url);
+    try {
+      let res = await axios.post(
+        "http://localhost:5000/scrape",
+        {
+          web_url: url,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      let data = await res.data;
+      if (data["title"] == "None") {
+        setIsLoading(false);
+        setHasProduct(false);
+      } else {
+        secondGetAPI(data["title"], data["description"]);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+
     // let data = await res.json();
-    // // do something with data
-    // setProductInfo(...data...);
+    // console.log(data);
+    // // // do something with data
+    // // setProductInfo(...data...);
     // setIsLoading(false);
     // setHasProduct(true);
 
@@ -72,20 +116,20 @@ function App() {
       // ..........
     })();
   }, []);
-  chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-    setUrl(tab.url);
-    getResFromAPI(tab.url);
-  });
-  chrome.tabs.onCreated.addListener(function (tab) {
-    setUrl(tab.url);
-    getResFromAPI(tab.url);
-  });
-  chrome.tabs.onActivated.addListener(function (info) {
-    chrome.tabs.get(info.tabId, function (tab) {
-      setUrl(tab.url);
-      getResFromAPI(tab.url);
-    });
-  });
+  // chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+  //   setUrl(tab.url);
+  //   getResFromAPI(tab.url);
+  // });
+  // chrome.tabs.onCreated.addListener(function (tab) {
+  //   setUrl(tab.url);
+  //   getResFromAPI(tab.url);
+  // });
+  // chrome.tabs.onActivated.addListener(function (info) {
+  //   chrome.tabs.get(info.tabId, function (tab) {
+  //     setUrl(tab.url);
+  //     getResFromAPI(tab.url);
+  //   });
+  // });
   // chrome.storage.onChanged.addListener((changes, namespace) => {
   //   console.log("o hai", changes, namespace);
   //   for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
@@ -179,7 +223,11 @@ function App() {
         <div className="title">EcoEval</div>
       </header>
 
-      <div className="product-title">product title</div>
+      <div className="product-title">
+        {productInfo?.product_type
+          ? productInfo?.product_type
+          : "product title"}
+      </div>
 
       {/* <div className="rating">
         <div className="rating-circle yellow">
@@ -188,7 +236,13 @@ function App() {
       </div> */}
 
       <div className="rating-container">
-        <div className="rating-arrow">
+        <div className={`rating-arrow ${
+          productInfo?.overall_sustainability == "-1"
+            ? "first-rot"
+            : productInfo?.overall_sustainability == "0"
+            ? "second-rot"
+            : "third-rot"
+        }`}>
           <div className="rating-arrow-body"></div>
           <div className="rating-arrow-triangle"></div>
         </div>
@@ -199,12 +253,36 @@ function App() {
         </div>
       </div>
 
-      <div className="rating-result">Not sustainable</div>
+      <div
+        className={`rating-result ${
+          productInfo?.overall_sustainability == "-1"
+            ? "red"
+            : productInfo?.overall_sustainability == "0"
+            ? "yellow"
+            : "green"
+        }`}
+      >
+        {productInfo?.overall_sustainability == "-1"
+          ? "Not sustainable"
+          : productInfo?.overall_sustainability == "0"
+          ? "May be sustainable..."
+          : "Sustainable!"}
+      </div>
 
       <div className="product-container">
-        <div className="description-title">description:</div>
+        <div className="description-title">product description:</div>
         <div className="description">
-          This product has yet to be implemented!
+          {productInfo?.product_description
+            ? productInfo?.product_description
+            : "This product has yet to be implemented!"}
+        </div>
+
+
+        <div className="description-title">company description:</div>
+        <div className="description">
+          {productInfo?.company_description
+            ? productInfo?.company_description
+            : "This product has yet to be implemented!"}
         </div>
       </div>
 

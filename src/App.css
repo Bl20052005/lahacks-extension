@@ -353,15 +353,34 @@
   transform: rotate(0deg);
 }
 
+.first-rot {
+  transform: rotate(15deg);
+}
+
+.second-rot {
+  transform: rotate(90deg);
+}
+
+.third-rot {
+  transform: rotate(165deg);
+}
+
 .rating-result {
   font-size: 30px;
   width: 100%;
   text-align: center;
 }
 
+.red {
+  color: #810000;
+}
+
 .yellow {
-  background-color: rgb(241, 238, 57);
-  border: 2px solid rgb(255, 217, 0);
+  color: #948a00;
+}
+
+.green {
+  color: #155f0e;
 }
 
 .rating-message {
