@@ -104,7 +104,7 @@ function App() {
         }
       );
       let data = await res.data;
-      if (data["title"] == "None") {
+      if (data["title"] == "None" && data["description"] == "None") {
         setIsLoading(false);
         setHasProduct(false);
       } else {

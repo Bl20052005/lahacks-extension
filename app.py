@@ -20,7 +20,7 @@ CORS(app)
 def scrape_call():
     # Get the web_url from the request body
     data = request.get_json()
-    web_url = data.get('web_url')
+    web_url = data.get("web_url")
 
     print(web_url)
 
@@ -47,10 +47,10 @@ def scrape_call():
 def gemini_call():
     # loading information sent by front end after confirming that user is on a product
     data = request.get_json()
-    product_title = data.get('title')
+    product_title = data.get("title")
     product_description = request.form.get("description")
 
-    print('product ttle and description', product_description, product_title)
+    print("product ttle and description", product_description, product_title)
 
     # configuration of Gemini
     generation_config = {
@@ -197,14 +197,14 @@ def gemini_call():
 def product_suggestions():
     # recieve product type
     data = request.get_json()
-    product_type = data.get('product_type')
+    product_type = data.get("product_type")
 
     # set up the request parameters
     params = {
         "api_key": os.getenv("rainforest_key"),
         "type": "search",
         "amazon_domain": "amazon.com",
-        "search_term": f"sustainable {product_type}",
+        "search_term": f"{product_type} sustainable",
         "sort_by": "featured",
         "exclude_sponsored": "true",
         "language": "en_US",
@@ -230,28 +230,28 @@ def product_suggestions():
     return jsonify(
         {
             "P1": {
-                "title": product_1["title"],
-                "link": product_1["link"],
-                "image_url": product_1["image"],
-                "cost": product_1["price"]["value"],
+                "title": product_1.get("title"),
+                "link": product_1.get("link"),
+                "image_url": product_1.get("image"),
+                "cost": product_1.get("price").get("value")
             },
             "P2": {
-                "title": product_2["title"],
-                "link": product_2["link"],
-                "image_url": product_2["image"],
-                "cost": product_2["price"]["value"],
+                "title": product_2.get("title"),
+                "link": product_2.get("link"),
+                "image_url": product_2.get("image"),
+                "cost": product_2.get("price").get("value")
             },
             "P3": {
-                "title": product_3["title"],
-                "link": product_3["link"],
-                "image_url": product_3["image"],
-                "cost": product_3["price"]["value"],
+                "title": product_3.get("title"),
+                "link": product_3.get("link"),
+                "image_url": product_3.get("image"),
+                "cost": product_3.get("price").get("value"),
             },
             "P4": {
-                "title": product_4["title"],
-                "link": product_4["link"],
-                "image_url": product_4["image"],
-                "cost": product_4["price"]["value"],
+                "title": product_4.get("title"),
+                "link": product_4.get("link"),
+                "image_url": product_4.get("image"),
+                "cost": product_4.get("price").get("value"),
             },
         }
     )
