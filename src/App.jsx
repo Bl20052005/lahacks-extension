@@ -310,6 +310,8 @@ function App() {
 
       <div className="division-line"></div>
 
+      <div className="considerations">You may want to consider...</div>
+
       <div className="alternatives">
         {altInfo.length <= 0
           ? null
