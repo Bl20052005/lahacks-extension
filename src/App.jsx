@@ -288,7 +288,7 @@ function App() {
         {productInfo?.overall_sustainability == "-1"
           ? "Not sustainable"
           : productInfo?.overall_sustainability == "0"
-          ? "May be sustainable..."
+          ? "Somewhat sustainable..."
           : "Sustainable!"}
       </div>
 
