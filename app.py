@@ -211,14 +211,14 @@ def product_suggestions():
     response = requests.request(
         "POST",
         "https://realtime.oxylabs.io/v1/queries",
-        auth=("just_arnav_", "Nigam2205117"),
+        auth=(os.getenv("username"), os.getenv("pw")),
         json=payload,
     )
 
     # make the http GET request to Rainforest API
     api_result = response.json()
 
-    print(api_result)
+    # print(api_result)
 
     results = api_result["results"][0]["content"]["results"]["organic"]
 
