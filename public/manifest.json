@@ -1,9 +1,10 @@
 {
-  "name": "React Chrome Extension",
+  "name": "EcoEval",
   "version": "1.0.0",
   "manifest_version": 3,
   "action": {
-    "default_title": "Sustainability"
+    "default_title": "EcoEval",
+    "default_icon": "images/plant.png"
   },
   "permissions": [
     "scripting",
@@ -13,6 +14,12 @@
     "bookmarks",
     "sidePanel"
   ],
+  "icons": {
+    "16": "images/plant.png",
+    "32": "images/plant.png",
+    "48": "images/plant.png",
+    "128": "images/plant.png"
+  },
   "host_permissions": ["http://*/*", "https://*/*"],
   "side_panel": {
     "default_path": "index.html"

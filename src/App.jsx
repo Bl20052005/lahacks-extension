@@ -5,6 +5,9 @@ import AlternativeBlock from "./AlternativeBlock";
 
 function App() {
   const [url, setUrl] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasProduct, setHasProduct] = useState(true);
+  const [productInfo, setProductInfo] = useState([]);
   const [altInfo, setAltInfo] = useState([
     {
       imgLink:
@@ -35,7 +38,22 @@ function App() {
       price: "99999999.99",
     },
   ]);
+
+  async function getResFromAPI() {
+    // setIsLoading(true);
+    // let res = await fetch("please get this url ready");
+    // let data = await res.json();
+    // // do something with data
+    // setProductInfo(...data...);
+    // setIsLoading(false);
+    // setHasProduct(true);
+
+    return true;
+  }
+
   useEffect(() => {
+    // we will get the api response right here
+    getResFromAPI();
     (async () => {
       // see the note below on how to choose currentWindow or lastFocusedWindow
       const [tab] = await chrome.tabs.query({
@@ -49,42 +67,105 @@ function App() {
   }, []);
   chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     setUrl(tab.url);
+    getResFromAPI();
   });
   chrome.tabs.onCreated.addListener(function (tab) {
     setUrl(tab.url);
+    getResFromAPI();
   });
   chrome.tabs.onActivated.addListener(function (info) {
     chrome.tabs.get(info.tabId, function (tab) {
       setUrl(tab.url);
+      getResFromAPI();
     });
   });
-  chrome.storage.onChanged.addListener((changes, namespace) => {
-    console.log("o hai", changes, namespace);
-    for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
-      if (key == "initialUrl") {
-        console.log("yes???");
-        setUrl(newValue);
-      }
-      console.log("yes???");
-      console.log(key);
-      console.log(`key is ${key}`, `which is ${typeof key}`);
-      // console.log(
-      //   `Storage key "${key}" ${
-      //     key == "initialUrl" ? "yes" : "no"
-      //   } in namespace "${namespace}" changed.`,
-      //   `Old value was "${oldValue}", new value is "${newValue}".`
-      // );
-    }
-  });
+  // chrome.storage.onChanged.addListener((changes, namespace) => {
+  //   console.log("o hai", changes, namespace);
+  //   for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
+  //     if (key == "initialUrl") {
+  //       console.log("yes???");
+  //       setUrl(newValue);
+  //     }
+  //     console.log("yes???");
+  //     console.log(key);
+  //     console.log(`key is ${key}`, `which is ${typeof key}`);
+  //     // console.log(
+  //     //   `Storage key "${key}" ${
+  //     //     key == "initialUrl" ? "yes" : "no"
+  //     //   } in namespace "${namespace}" changed.`,
+  //     //   `Old value was "${oldValue}", new value is "${newValue}".`
+  //     // );
+  //   }
+  // });
+
+  if (isLoading) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner">
+          <svg
+            className="spinner-main"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+          >
+            <path d="M211 7.3C205 1 196-1.4 187.6 .8s-14.9 8.9-17.1 17.3L154.7 80.6l-62-17.5c-8.4-2.4-17.4 0-23.5 6.1s-8.5 15.1-6.1 23.5l17.5 62L18.1 170.6c-8.4 2.1-15 8.7-17.3 17.1S1 205 7.3 211l46.2 45L7.3 301C1 307-1.4 316 .8 324.4s8.9 14.9 17.3 17.1l62.5 15.8-17.5 62c-2.4 8.4 0 17.4 6.1 23.5s15.1 8.5 23.5 6.1l62-17.5 15.8 62.5c2.1 8.4 8.7 15 17.1 17.3s17.3-.2 23.4-6.4l45-46.2 45 46.2c6.1 6.2 15 8.7 23.4 6.4s14.9-8.9 17.1-17.3l15.8-62.5 62 17.5c8.4 2.4 17.4 0 23.5-6.1s8.5-15.1 6.1-23.5l-17.5-62 62.5-15.8c8.4-2.1 15-8.7 17.3-17.1s-.2-17.4-6.4-23.4l-46.2-45 46.2-45c6.2-6.1 8.7-15 6.4-23.4s-8.9-14.9-17.3-17.1l-62.5-15.8 17.5-62c2.4-8.4 0-17.4-6.1-23.5s-15.1-8.5-23.5-6.1l-62 17.5L341.4 18.1c-2.1-8.4-8.7-15-17.1-17.3S307 1 301 7.3L256 53.5 211 7.3z" />
+          </svg>
+          <div className="white-circle"></div>
+        </div>
+        <p className="loading-message">getting the flowers ready...</p>
+      </div>
+    );
+  }
+
+  if (!hasProduct) {
+    return (
+      <div className="none-container">
+        <div className="none-circle">
+          <svg
+            className="none-logo"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+          >
+            <path d="M272 96c-78.6 0-145.1 51.5-167.7 122.5c33.6-17 71.5-26.5 111.7-26.5h88c8.8 0 16 7.2 16 16s-7.2 16-16 16H288 216s0 0 0 0c-16.6 0-32.7 1.9-48.3 5.4c-25.9 5.9-49.9 16.4-71.4 30.7c0 0 0 0 0 0C38.3 298.8 0 364.9 0 440v16c0 13.3 10.7 24 24 24s24-10.7 24-24V440c0-48.7 20.7-92.5 53.8-123.2C121.6 392.3 190.3 448 272 448l1 0c132.1-.7 239-130.9 239-291.4c0-42.6-7.5-83.1-21.1-119.6c-2.6-6.9-12.7-6.6-16.2-.1C455.9 72.1 418.7 96 376 96L272 96z" />
+          </svg>
+          <div className="none-title">EcoEval</div>
+        </div>
+        <p className="none-description">We found no product on your page...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="container">
+      <svg
+        className="leaf-decor leaf-1"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 512 512"
+      >
+        <path d="M272 96c-78.6 0-145.1 51.5-167.7 122.5c33.6-17 71.5-26.5 111.7-26.5h88c8.8 0 16 7.2 16 16s-7.2 16-16 16H288 216s0 0 0 0c-16.6 0-32.7 1.9-48.3 5.4c-25.9 5.9-49.9 16.4-71.4 30.7c0 0 0 0 0 0C38.3 298.8 0 364.9 0 440v16c0 13.3 10.7 24 24 24s24-10.7 24-24V440c0-48.7 20.7-92.5 53.8-123.2C121.6 392.3 190.3 448 272 448l1 0c132.1-.7 239-130.9 239-291.4c0-42.6-7.5-83.1-21.1-119.6c-2.6-6.9-12.7-6.6-16.2-.1C455.9 72.1 418.7 96 376 96L272 96z" />
+      </svg>
+      <svg
+        className="leaf-decor leaf-2"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 512 512"
+      >
+        <path d="M272 96c-78.6 0-145.1 51.5-167.7 122.5c33.6-17 71.5-26.5 111.7-26.5h88c8.8 0 16 7.2 16 16s-7.2 16-16 16H288 216s0 0 0 0c-16.6 0-32.7 1.9-48.3 5.4c-25.9 5.9-49.9 16.4-71.4 30.7c0 0 0 0 0 0C38.3 298.8 0 364.9 0 440v16c0 13.3 10.7 24 24 24s24-10.7 24-24V440c0-48.7 20.7-92.5 53.8-123.2C121.6 392.3 190.3 448 272 448l1 0c132.1-.7 239-130.9 239-291.4c0-42.6-7.5-83.1-21.1-119.6c-2.6-6.9-12.7-6.6-16.2-.1C455.9 72.1 418.7 96 376 96L272 96z" />
+      </svg>
+      <svg
+        className="leaf-decor leaf-3"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 512 512"
+      >
+        <path d="M272 96c-78.6 0-145.1 51.5-167.7 122.5c33.6-17 71.5-26.5 111.7-26.5h88c8.8 0 16 7.2 16 16s-7.2 16-16 16H288 216s0 0 0 0c-16.6 0-32.7 1.9-48.3 5.4c-25.9 5.9-49.9 16.4-71.4 30.7c0 0 0 0 0 0C38.3 298.8 0 364.9 0 440v16c0 13.3 10.7 24 24 24s24-10.7 24-24V440c0-48.7 20.7-92.5 53.8-123.2C121.6 392.3 190.3 448 272 448l1 0c132.1-.7 239-130.9 239-291.4c0-42.6-7.5-83.1-21.1-119.6c-2.6-6.9-12.7-6.6-16.2-.1C455.9 72.1 418.7 96 376 96L272 96z" />
+      </svg>
+      <div className={`fade-in-screen fade-in-screen-anim`}></div>
+
       <header className="header">
         <div className="logo">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <svg className="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <path d="M272 96c-78.6 0-145.1 51.5-167.7 122.5c33.6-17 71.5-26.5 111.7-26.5h88c8.8 0 16 7.2 16 16s-7.2 16-16 16H288 216s0 0 0 0c-16.6 0-32.7 1.9-48.3 5.4c-25.9 5.9-49.9 16.4-71.4 30.7c0 0 0 0 0 0C38.3 298.8 0 364.9 0 440v16c0 13.3 10.7 24 24 24s24-10.7 24-24V440c0-48.7 20.7-92.5 53.8-123.2C121.6 392.3 190.3 448 272 448l1 0c132.1-.7 239-130.9 239-291.4c0-42.6-7.5-83.1-21.1-119.6c-2.6-6.9-12.7-6.6-16.2-.1C455.9 72.1 418.7 96 376 96L272 96z" />
           </svg>
         </div>
-        <div className="title">EcoSomethingIdk</div>
+        <div className="title">EcoEval</div>
       </header>
 
       <div className="product-title">product title</div>
@@ -100,8 +181,9 @@ function App() {
         <div className="description">
           This product has yet to be implemented!
         </div>
-        <div>We recommend!</div>
       </div>
+      
+      <div className="division-line"></div>
 
       <div className="alternatives">
         {altInfo.map((info) => {

@@ -10,6 +10,12 @@
   align-items: center;
   gap: 5px;
   background-color: #bff07f;
+  cursor: pointer;
+  transition: box-shadow 0.5s;
+}
+
+.alterative-block:hover {
+    box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.3);
 }
 
 .alternative-image {
@@ -26,5 +32,5 @@
 }
 
 .alternative-price {
-    font-size: 18px;
+  font-size: 18px;
 }
