@@ -39,6 +39,20 @@ body {
   overflow-x: hidden;
 }
 
+body::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+body::-webkit-scrollbar-thumb {
+  background: #00571a;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;

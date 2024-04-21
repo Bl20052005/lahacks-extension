@@ -6,6 +6,18 @@
   gap: 10px;
 }
 
+/* .container::-webkit-scrollbar, .none-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.container::-webkit-scrollbar-track, .none-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.container::-webkit-scrollbar-thumb, .none-container::-webkit-scrollbar-thumb {
+  background: #002c0d;
+} */
+
 .none-container,
 .loading-container {
   height: 100%;
@@ -156,6 +168,7 @@
 .leaf-decor {
   position: absolute;
   pointer-events: none;
+  z-index: 2;
 }
 
 .leaf-1 {
@@ -195,7 +208,18 @@
   animation-fill-mode: forwards;
 }
 
+@keyframes header {
+  0% {
+    top: -70px;
+  }
+  100% {
+    top: 0px;
+  }
+}
+
 .header {
+  position: absolute;
+  width: 100%;
   margin: 0;
   padding: 0;
   display: flex;
@@ -205,6 +229,7 @@
   justify-content: center;
   gap: 10px;
   background-color: rgba(14, 128, 4, 0.37);
+  animation: header 1s ease-in-out;
 }
 
 .logo {
@@ -242,20 +267,96 @@
   font-size: 25px;
 }
 
-.rating {
+.rating-container {
+  position: relative;
   width: 100%;
   height: 100px;
+  overflow: hidden;
   display: flex;
   justify-content: center;
 }
 
 .rating-circle {
-  width: 100px;
-  height: 100px;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border: 2px solid black;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: conic-gradient(
+    from 0.5turn,
+    orange,
+    #ff2626,
+    #fffb29,
+    #46ff21,
+    blue
+  );
+}
+
+.black-rating-line-1 {
+  background-color: black;
+  position: absolute;
+  left: 0px;
+  top: 96px;
+  z-index: 1;
+  height: 2px;
+  width: 62px;
+}
+
+.black-rating-line-2 {
+  background-color: black;
+  position: absolute;
+  right: 0px;
+  top: 96px;
+  z-index: 1;
+  height: 2px;
+  width: 62px;
+}
+
+.rating-blocking-circle {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: linear-gradient(#d3ff9a, #d5ff9e);
+  border: 2px solid black;
+}
+
+.rating-arrow {
+  height: 13px;
+  width: 80px;
+  position: absolute;
+  top: 85px;
+  left: calc(50% - 80px);
+  z-index: 1;
+  transform-origin: center right;
+}
+
+.rating-arrow-body {
+  width: 75px;
+  height: 4px;
+  position: absolute;
+  top: 4px;
+  background-color: black;
+  left: 5px;
+}
+
+.rating-arrow-triangle {
+  position: absolute;
+  left: 0;
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 6.5px 11.3px 6.5px 0;
+  border-color: transparent #000000 transparent transparent;
+  transform: rotate(0deg);
+}
+
+.rating-result {
+  font-size: 30px;
+  width: 100%;
+  text-align: center;
 }
 
 .yellow {
@@ -290,6 +391,7 @@
 }
 
 .product-title {
+  margin-top: 70px;
   text-align: center;
   font-size: 25px;
 }
