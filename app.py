@@ -200,27 +200,27 @@ def product_suggestions():
     product_type = data.get("product_type")
 
     # set up the request parameters
-    params = {
-        "api_key": os.getenv("rainforest_key"),
-        "type": "search",
-        "amazon_domain": "amazon.com",
-        "search_term": f"{product_type} sustainable",
-        "sort_by": "featured",
-        "exclude_sponsored": "true",
-        "language": "en_US",
-        "currency": "usd",
-        "page": "1",
-        "max_page": "1",
-        "output": "json",
+    payload = {
+        "source": "amazon_search",
+        "query": "sustainable shirt",
+        "parse": True,
+        "domain": "com",
+        "start_page": "1",
+        "pages": "1",
     }
+    response = requests.request(
+        "POST",
+        "https://realtime.oxylabs.io/v1/queries",
+        auth=("just_arnav_", "Nigam2205117"),
+        json=payload,
+    )
 
     # make the http GET request to Rainforest API
-    api_result = requests.get("https://api.rainforestapi.com/request", params)
+    api_result = response.json()
 
-    # JSON response from Rainforest API
-    json_loaded = api_result.json()
+    print(api_result)
 
-    results = json_loaded["search_results"]
+    results = api_result["results"][0]["content"]["results"]["organic"]
 
     product_1 = results[0]
     product_2 = results[1]
@@ -231,27 +231,27 @@ def product_suggestions():
         {
             "P1": {
                 "title": product_1.get("title"),
-                "link": product_1.get("link"),
-                "image_url": product_1.get("image"),
-                "cost": product_1.get("price").get("value")
+                "link": product_1.get("url"),
+                "image_url": product_1.get("url_image"),
+                "cost": product_1.get("price_upper"),
             },
             "P2": {
                 "title": product_2.get("title"),
-                "link": product_2.get("link"),
-                "image_url": product_2.get("image"),
-                "cost": product_2.get("price").get("value")
+                "link": product_2.get("url"),
+                "image_url": product_2.get("url_image"),
+                "cost": product_2.get("price_upper"),
             },
             "P3": {
                 "title": product_3.get("title"),
-                "link": product_3.get("link"),
-                "image_url": product_3.get("image"),
-                "cost": product_3.get("price").get("value"),
+                "link": product_3.get("url"),
+                "image_url": product_3.get("url_image"),
+                "cost": product_3.get("price_upper"),
             },
             "P4": {
                 "title": product_4.get("title"),
-                "link": product_4.get("link"),
-                "image_url": product_4.get("image"),
-                "cost": product_4.get("price").get("value"),
+                "link": product_4.get("url"),
+                "image_url": product_4.get("url_image"),
+                "cost": product_4.get("price_upper"),
             },
         }
     )
