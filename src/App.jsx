@@ -33,7 +33,7 @@ function App() {
       imgAlt: "sussy",
       description: "very SUStainable",
       price: "99999999.99",
-    }
+    },
   ]);
   useEffect(() => {
     (async () => {
@@ -89,25 +89,18 @@ function App() {
 
       <div className="product-title">product title</div>
 
-      <div className="product-container">
-        <img
-          className="image"
-          src="https://cdn11.bigcommerce.com/s-lzx6le/images/stencil/1280x1280/products/1241/2902/167398L__04164.1557610883.jpg?c=2"
-          alt=""
-        />
-        <div className="description">
-          This product has yet to be implemented! url: {url}
-        </div>
-        <div className="materials">
-          <div className="material">lolol</div>
-        </div>
-        <div>Sus score: 0</div>
-      </div>
-
       <div className="rating">
         <div className="rating-circle yellow">
           <div className="rating-message">Maybe</div>
         </div>
+      </div>
+
+      <div className="product-container">
+        <div className="description-title">description:</div>
+        <div className="description">
+          This product has yet to be implemented!
+        </div>
+        <div>We recommend!</div>
       </div>
 
       <div className="alternatives">

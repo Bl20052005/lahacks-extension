@@ -4,7 +4,7 @@ import App from "./App.jsx";
 import "./index.css";
 
 const rootElement = document.createElement("div");
-rootElement.id = "react-chrome-app";
+rootElement.id = "sus-app";
 document.body.appendChild(rootElement);
 
 const root = ReactDOM.createRoot(rootElement);
