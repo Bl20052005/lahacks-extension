@@ -57,7 +57,6 @@ function App() {
 
   useEffect(() => {
     // we will get the api response right here
-    getResFromAPI();
     (async () => {
       // see the note below on how to choose currentWindow or lastFocusedWindow
       const [tab] = await chrome.tabs.query({
@@ -65,22 +64,23 @@ function App() {
         lastFocusedWindow: true,
       });
       setUrl(tab.url);
+      getResFromAPI(tab.url);
       console.log(tab.url);
       // ..........
     })();
   }, []);
   chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     setUrl(tab.url);
-    getResFromAPI();
+    getResFromAPI(tab.url);
   });
   chrome.tabs.onCreated.addListener(function (tab) {
     setUrl(tab.url);
-    getResFromAPI();
+    getResFromAPI(tab.url);
   });
   chrome.tabs.onActivated.addListener(function (info) {
     chrome.tabs.get(info.tabId, function (tab) {
       setUrl(tab.url);
-      getResFromAPI();
+      getResFromAPI(tab.url);
     });
   });
   // chrome.storage.onChanged.addListener((changes, namespace) => {
