@@ -45,7 +45,10 @@ function App() {
 
   async function getResFromAPI() {
     // setIsLoading(true);
-    // let res = await fetch("please get this url ready");
+    // let res = await fetch("please get this url ready", {
+    //   method: "POST",
+    //   headers: {"Content-type": "application/json"}
+    // });
     // let data = await res.json();
     // // do something with data
     // setProductInfo(...data...);
