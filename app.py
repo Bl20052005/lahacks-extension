@@ -231,25 +231,25 @@ def product_suggestions():
         {
             "P1": {
                 "title": product_1.get("title"),
-                "link": product_1.get("url"),
+                "link": "https://amazon.com" + product_1.get("url"),
                 "image_url": product_1.get("url_image"),
                 "cost": product_1.get("price_upper"),
             },
             "P2": {
                 "title": product_2.get("title"),
-                "link": product_2.get("url"),
+                "link": "https://amazon.com" + product_2.get("url"),
                 "image_url": product_2.get("url_image"),
                 "cost": product_2.get("price_upper"),
             },
             "P3": {
                 "title": product_3.get("title"),
-                "link": product_3.get("url"),
+                "link": "https://amazon.com" + product_3.get("url"),
                 "image_url": product_3.get("url_image"),
                 "cost": product_3.get("price_upper"),
             },
             "P4": {
                 "title": product_4.get("title"),
-                "link": product_4.get("url"),
+                "link": "https://amazon.com" + product_4.get("url"),
                 "image_url": product_4.get("url_image"),
                 "cost": product_4.get("price_upper"),
             },
